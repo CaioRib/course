@@ -1,5 +1,8 @@
 package com.caiorib.spring.course.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,6 +26,7 @@ public class CategoryEntity implements Serializable {
     @Column(name = "DES_NAME")
     private String name;
 
+    @JsonManagedReference
     @ManyToMany(mappedBy = "categories")
     private List<ProductEntity> products = new ArrayList<>();
 
@@ -51,12 +55,13 @@ public class CategoryEntity implements Serializable {
     }
 
     public CategoryEntity (){
-
+        this.products = new ArrayList<>();
     }
 
     public CategoryEntity(Long id, String name) {
         this.id = id;
         this.name = name;
+        this.products = new ArrayList<>();
     }
 
     @Override

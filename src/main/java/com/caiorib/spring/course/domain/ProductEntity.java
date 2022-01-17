@@ -1,5 +1,8 @@
 package com.caiorib.spring.course.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,6 +31,7 @@ public class ProductEntity implements Serializable {
     @Column(name="DES_PRICE")
     private String price;
 
+    @JsonBackReference
     @ManyToMany
     @JoinTable(name="CATEGORY_PRODUCT",
             joinColumns = @JoinColumn(name = "IDT_PRODUCT"),
