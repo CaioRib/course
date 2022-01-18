@@ -1,23 +1,32 @@
 package com.caiorib.spring.course;
 
 import com.caiorib.spring.course.domain.AddressEntity;
+import com.caiorib.spring.course.domain.CardPaymentEntity;
 import com.caiorib.spring.course.domain.CategoryEntity;
 import com.caiorib.spring.course.domain.CityEntity;
 import com.caiorib.spring.course.domain.CustomerEntity;
+import com.caiorib.spring.course.domain.OrderEntity;
+import com.caiorib.spring.course.domain.PaymentEntity;
 import com.caiorib.spring.course.domain.ProductEntity;
+import com.caiorib.spring.course.domain.SlipPaymentEntity;
 import com.caiorib.spring.course.domain.StateEntity;
 import com.caiorib.spring.course.domain.enums.CustomerTypeEnum;
+import com.caiorib.spring.course.domain.enums.PaymentStatusEnum;
 import com.caiorib.spring.course.repositories.AddressRepository;
 import com.caiorib.spring.course.repositories.CategoryRepository;
 import com.caiorib.spring.course.repositories.CityRepository;
 import com.caiorib.spring.course.repositories.CustomerRepository;
+import com.caiorib.spring.course.repositories.OrderRepository;
+import com.caiorib.spring.course.repositories.PaymentRepository;
 import com.caiorib.spring.course.repositories.ProductRepository;
 import com.caiorib.spring.course.repositories.StateRepository;
+import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import javax.annotation.PostConstruct;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 @SpringBootApplication
@@ -41,6 +50,11 @@ public class Application {
 	@Autowired
 	private AddressRepository addressRepository;
 
+	@Autowired
+	private OrderRepository orderRepository;
+
+	@Autowired
+	private PaymentRepository paymentRepository;
 
 
 	public static void main(String[] args) {
@@ -82,12 +96,37 @@ public class Application {
 
 		customer1.getAddresses().addAll(Arrays.asList(address1, address2));
 
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+		OrderEntity order1 = null;
+		OrderEntity order2 = null;
+		PaymentEntity payment1 = null;
+		PaymentEntity payment2 = null;
+
+		try {
+			order1 = new OrderEntity(null, simpleDateFormat.parse("30/09/2017 10:32"), customer1, address1);
+			order2 = new OrderEntity(null, simpleDateFormat.parse("10/10/2017 19:35"), customer1, address2);
+
+			payment1 = new CardPaymentEntity(null, PaymentStatusEnum.FINISHED, order1, 6);
+			order1.setPayment(payment1);
+
+			payment2 = new SlipPaymentEntity(null, PaymentStatusEnum.PENDING, order2, simpleDateFormat.parse("20/10/2017 00:00"), null);
+			order2.setPayment(payment2);
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+
+		customer1.getOrders().addAll(Arrays.asList(order1, order2));
+
 		categoryRepository.saveAll(Arrays.asList(category1, category2));
 		productRepository.saveAll(Arrays.asList(product1, product2, product3));
 		stateRepository.saveAll(Arrays.asList(state1, state2));
 		cityRepository.saveAll(Arrays.asList(city1, city2, city3));
 		customerRepository.save(customer1);
 		addressRepository.saveAll(Arrays.asList(address1, address2));
+		orderRepository.saveAll(Arrays.asList(order1, order2));
+		paymentRepository.saveAll(Arrays.asList(payment1, payment2));
 
 
 	}

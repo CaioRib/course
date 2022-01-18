@@ -50,7 +50,13 @@ public class CustomerEntity implements Serializable {
     @CollectionTable(name = "PHONE", joinColumns = @JoinColumn(name="IDT_CUSTOMER", referencedColumnName = "IDT_CUSTOMER"))
     private Set<String> phones;
 
+    @OneToMany(mappedBy = "customer")
+    private List<OrderEntity> orders;
+
     public CustomerEntity() {
+        this.addresses = new ArrayList<>();
+        this.phones = new HashSet<>();
+        this.orders = new ArrayList<>();
     }
 
     public CustomerEntity(Long id, String name, String email, String legalId, CustomerTypeEnum type) {
@@ -61,6 +67,8 @@ public class CustomerEntity implements Serializable {
         this.type = type.getId();
         this.addresses = new ArrayList<>();
         this.phones = new HashSet<>();
+        this.orders = new ArrayList<>();
+
     }
 
     public Long getId() {
@@ -117,6 +125,14 @@ public class CustomerEntity implements Serializable {
 
     public void setPhones(Set<String> phones) {
         this.phones = phones;
+    }
+
+    public List<OrderEntity> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<OrderEntity> orders) {
+        this.orders = orders;
     }
 
     @Override
