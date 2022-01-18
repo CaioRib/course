@@ -1,9 +1,18 @@
 package com.caiorib.spring.course;
 
+import com.caiorib.spring.course.domain.AddressEntity;
 import com.caiorib.spring.course.domain.CategoryEntity;
+import com.caiorib.spring.course.domain.CityEntity;
+import com.caiorib.spring.course.domain.CustomerEntity;
 import com.caiorib.spring.course.domain.ProductEntity;
+import com.caiorib.spring.course.domain.StateEntity;
+import com.caiorib.spring.course.domain.enums.CustomerTypeEnum;
+import com.caiorib.spring.course.repositories.AddressRepository;
 import com.caiorib.spring.course.repositories.CategoryRepository;
+import com.caiorib.spring.course.repositories.CityRepository;
+import com.caiorib.spring.course.repositories.CustomerRepository;
 import com.caiorib.spring.course.repositories.ProductRepository;
+import com.caiorib.spring.course.repositories.StateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -19,6 +28,19 @@ public class Application {
 
 	@Autowired
 	private ProductRepository productRepository;
+
+	@Autowired
+	private CityRepository cityRepository;
+
+	@Autowired
+	private StateRepository stateRepository;
+
+	@Autowired
+	private CustomerRepository customerRepository;
+
+	@Autowired
+	private AddressRepository addressRepository;
+
 
 
 	public static void main(String[] args) {
@@ -37,12 +59,37 @@ public class Application {
 		category1.getProducts().addAll(Arrays.asList(product1, product2, product3));
 		category2.getProducts().addAll(Arrays.asList(product2));
 
-		product1.getCategories().addAll(Arrays.asList(category1));
+		product1.getCategories().add(category1);
 		product2.getCategories().addAll(Arrays.asList(category1, category2));
-		product3.getCategories().addAll(Arrays.asList(category1));
+		product3.getCategories().add(category1);
+
+		StateEntity state1 = new StateEntity(null, "São Paulo");
+		StateEntity state2 = new StateEntity(null, "Minas Gerais");
+
+		CityEntity city1 = new CityEntity(null, "Uberlândia", state2);
+		CityEntity city2 = new CityEntity(null, "São Paulo", state1);
+		CityEntity city3 = new CityEntity(null, "Campinas", state1);
+
+
+		state1.getCities().addAll(Arrays.asList(city2, city3));
+		state2.getCities().add(city1);
+
+		CustomerEntity customer1 = new CustomerEntity(null, "Maria Silva", "maria@gmail.com", "36378912377", CustomerTypeEnum.NATURAL_PERSON);
+		customer1.getPhones().addAll(Arrays.asList("27363323", "93838393"));
+
+		AddressEntity address1 = new AddressEntity(null, "Rua Flores", 300L, "Apto 303", "Jardim", "38220834", customer1, city1);
+		AddressEntity address2 = new AddressEntity(null, "Ave Matos", 105L, "Sala 800", "Centro", "38777012", customer1, city2);
+
+		customer1.getAddresses().addAll(Arrays.asList(address1, address2));
 
 		categoryRepository.saveAll(Arrays.asList(category1, category2));
 		productRepository.saveAll(Arrays.asList(product1, product2, product3));
+		stateRepository.saveAll(Arrays.asList(state1, state2));
+		cityRepository.saveAll(Arrays.asList(city1, city2, city3));
+		customerRepository.save(customer1);
+		addressRepository.saveAll(Arrays.asList(address1, address2));
+
+
 	}
 
 }
