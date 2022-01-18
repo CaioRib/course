@@ -1,6 +1,7 @@
 package com.caiorib.spring.course.domain;
 
 import com.caiorib.spring.course.domain.enums.PaymentStatusEnum;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,9 +15,11 @@ public class SlipPaymentEntity extends PaymentEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Column(name = "DAT_DEADLINE")
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private Date deadline;
 
     @Column(name = "DAT_PAYMENT")
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private Date datePayment;
 
     public SlipPaymentEntity() {

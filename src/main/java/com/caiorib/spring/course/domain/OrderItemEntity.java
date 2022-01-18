@@ -1,7 +1,9 @@
 package com.caiorib.spring.course.domain;
 
 import com.caiorib.spring.course.domain.db.OrderItemPK;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -14,9 +16,16 @@ public class OrderItemEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @EmbeddedId
+    @JsonIgnore
     private OrderItemPK id;
+
+    @Column(name = "NUM_DISCOUNT")
     private Double discount;
+
+    @Column(name = "NUM_AMOUNT")
     private Integer amount;
+
+    @Column(name = "NUM_PRICE")
     private Double price;
 
     public OrderItemEntity() {
@@ -32,6 +41,7 @@ public class OrderItemEntity implements Serializable {
         this.price = price;
     }
 
+    @JsonIgnore
     public OrderEntity getOrder() {
         return this.id.getOrder();
     }

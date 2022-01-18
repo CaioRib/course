@@ -1,7 +1,5 @@
 package com.caiorib.spring.course.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,7 +24,6 @@ public class CategoryEntity implements Serializable {
     @Column(name = "DES_NAME")
     private String name;
 
-    @JsonManagedReference
     @ManyToMany(mappedBy = "categories")
     private List<ProductEntity> products = new ArrayList<>();
 

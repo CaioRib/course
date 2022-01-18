@@ -1,7 +1,7 @@
 package com.caiorib.spring.course.domain;
 
 import com.caiorib.spring.course.domain.enums.CustomerTypeEnum;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
@@ -43,7 +43,6 @@ public class CustomerEntity implements Serializable {
     private Long type;
 
     @OneToMany(mappedBy = "customer")
-    @JsonManagedReference
     private List<AddressEntity> addresses;
 
     @ElementCollection
@@ -51,6 +50,7 @@ public class CustomerEntity implements Serializable {
     private Set<String> phones;
 
     @OneToMany(mappedBy = "customer")
+    @JsonIgnore
     private List<OrderEntity> orders;
 
     public CustomerEntity() {

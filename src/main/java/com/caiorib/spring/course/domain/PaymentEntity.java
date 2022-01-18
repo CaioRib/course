@@ -1,6 +1,7 @@
 package com.caiorib.spring.course.domain;
 
 import com.caiorib.spring.course.domain.enums.PaymentStatusEnum;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -31,6 +32,7 @@ public abstract class PaymentEntity implements Serializable {
 
     @OneToOne
     @JoinColumn(name = "IDT_ORDER")
+    @JsonIgnore
     private OrderEntity order;
 
     public PaymentEntity() {

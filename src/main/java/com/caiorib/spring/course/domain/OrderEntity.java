@@ -1,5 +1,7 @@
 package com.caiorib.spring.course.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,6 +31,7 @@ public class OrderEntity implements Serializable {
     private Long id;
 
     @Column(name = "DAT_ORDER")
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
     private Date date;
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "order", orphanRemoval = true)

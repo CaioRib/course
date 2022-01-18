@@ -1,6 +1,6 @@
 package com.caiorib.spring.course.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -33,7 +33,7 @@ public class ProductEntity implements Serializable {
     @Column(name="DES_PRICE")
     private String price;
 
-    @JsonBackReference
+    @JsonIgnore
     @ManyToMany
     @JoinTable(name="CATEGORY_PRODUCT",
             joinColumns = @JoinColumn(name = "IDT_PRODUCT"),
@@ -42,6 +42,7 @@ public class ProductEntity implements Serializable {
     private List<CategoryEntity> categories;
 
     @OneToMany(mappedBy = "id.product")
+    @JsonIgnore
     private Set<OrderItemEntity> items;
 
     public ProductEntity(Long id, String name, String price) {
@@ -59,6 +60,7 @@ public class ProductEntity implements Serializable {
         this.items = new HashSet<>();
     }
 
+    @JsonIgnore
     public List<OrderEntity> getOrders() {
         List<OrderEntity> orders = new ArrayList<>();
         for (OrderItemEntity orderItem : items) {
