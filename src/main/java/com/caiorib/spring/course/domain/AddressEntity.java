@@ -1,5 +1,7 @@
 package com.caiorib.spring.course.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
@@ -39,6 +41,7 @@ public class AddressEntity implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "IDT_CUSTOMER", foreignKey = @ForeignKey(name = "CUSTOMER_FK"))
+    @JsonBackReference
     private CustomerEntity customer;
 
     @ManyToOne

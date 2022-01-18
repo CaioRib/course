@@ -1,5 +1,7 @@
 package com.caiorib.spring.course.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,6 +26,7 @@ public class StateEntity implements Serializable {
     private String nome;
 
     @OneToMany(mappedBy = "state")
+    @JsonBackReference
     private List<CityEntity> cities;
 
     public StateEntity(Long id, String nome) {

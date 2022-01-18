@@ -6,5 +6,4 @@ public interface CategoryService {
 
     CategoryEntity findOne(Long id);
 
-    void createCategory(String name);
 }

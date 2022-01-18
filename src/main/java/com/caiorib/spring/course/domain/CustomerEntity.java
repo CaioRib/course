@@ -1,6 +1,7 @@
 package com.caiorib.spring.course.domain;
 
 import com.caiorib.spring.course.domain.enums.CustomerTypeEnum;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
@@ -42,6 +43,7 @@ public class CustomerEntity implements Serializable {
     private Long type;
 
     @OneToMany(mappedBy = "customer")
+    @JsonManagedReference
     private List<AddressEntity> addresses;
 
     @ElementCollection

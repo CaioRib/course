@@ -1,5 +1,7 @@
 package com.caiorib.spring.course.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
@@ -25,6 +27,7 @@ public class CityEntity implements Serializable {
 
     @ManyToOne
     @JoinColumn(name="IDT_STATE", foreignKey = @ForeignKey(name = "STATE_FK"))
+    @JsonManagedReference
     private StateEntity state;
 
     public CityEntity(Long id, String name, StateEntity state) {
