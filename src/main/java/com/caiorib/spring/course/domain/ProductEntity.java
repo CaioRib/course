@@ -10,10 +10,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity(name = "PRODUCT")
 public class ProductEntity implements Serializable {
@@ -38,17 +41,31 @@ public class ProductEntity implements Serializable {
     )
     private List<CategoryEntity> categories;
 
+    @OneToMany(mappedBy = "id.product")
+    private Set<OrderItemEntity> items;
+
     public ProductEntity(Long id, String name, String price) {
         this.id = id;
         this.name = name;
         this.price = price;
 
         this.categories = new ArrayList<>();
+        this.items = new HashSet<>();
 
     }
 
     public ProductEntity() {
         this.categories = new ArrayList<>();
+        this.items = new HashSet<>();
+    }
+
+    public List<OrderEntity> getOrders() {
+        List<OrderEntity> orders = new ArrayList<>();
+        for (OrderItemEntity orderItem : items) {
+            orders.add(orderItem.getOrder());
+        }
+
+        return orders;
     }
 
     public Long getId() {
@@ -81,6 +98,14 @@ public class ProductEntity implements Serializable {
 
     public void setCategories(List<CategoryEntity> categories) {
         this.categories = categories;
+    }
+
+    public Set<OrderItemEntity> getItems() {
+        return items;
+    }
+
+    public void setItems(Set<OrderItemEntity> items) {
+        this.items = items;
     }
 
     @Override

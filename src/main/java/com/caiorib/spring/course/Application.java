@@ -6,16 +6,19 @@ import com.caiorib.spring.course.domain.CategoryEntity;
 import com.caiorib.spring.course.domain.CityEntity;
 import com.caiorib.spring.course.domain.CustomerEntity;
 import com.caiorib.spring.course.domain.OrderEntity;
+import com.caiorib.spring.course.domain.OrderItemEntity;
 import com.caiorib.spring.course.domain.PaymentEntity;
 import com.caiorib.spring.course.domain.ProductEntity;
 import com.caiorib.spring.course.domain.SlipPaymentEntity;
 import com.caiorib.spring.course.domain.StateEntity;
+import com.caiorib.spring.course.domain.db.OrderItemPK;
 import com.caiorib.spring.course.domain.enums.CustomerTypeEnum;
 import com.caiorib.spring.course.domain.enums.PaymentStatusEnum;
 import com.caiorib.spring.course.repositories.AddressRepository;
 import com.caiorib.spring.course.repositories.CategoryRepository;
 import com.caiorib.spring.course.repositories.CityRepository;
 import com.caiorib.spring.course.repositories.CustomerRepository;
+import com.caiorib.spring.course.repositories.OrderItemRepository;
 import com.caiorib.spring.course.repositories.OrderRepository;
 import com.caiorib.spring.course.repositories.PaymentRepository;
 import com.caiorib.spring.course.repositories.ProductRepository;
@@ -55,6 +58,9 @@ public class Application {
 
 	@Autowired
 	private PaymentRepository paymentRepository;
+
+	@Autowired
+	private OrderItemRepository orderItemRepository;
 
 
 	public static void main(String[] args) {
@@ -119,6 +125,17 @@ public class Application {
 
 		customer1.getOrders().addAll(Arrays.asList(order1, order2));
 
+		OrderItemEntity orderItem1 = new OrderItemEntity(order1, product1, 0.00, 1, 2000.00);
+		OrderItemEntity orderItem2 = new OrderItemEntity(order1, product3, 0.00, 2, 80.00);
+		OrderItemEntity orderItem3 = new OrderItemEntity(order2, product2, 100.00, 1, 800.00);
+
+		order1.getItems().addAll(Arrays.asList(orderItem1, orderItem2));
+		order2.getItems().add((orderItem3));
+
+		product1.getItems().add(orderItem1);
+		product2.getItems().add(orderItem3);
+		product3.getItems().add(orderItem2);
+
 		categoryRepository.saveAll(Arrays.asList(category1, category2));
 		productRepository.saveAll(Arrays.asList(product1, product2, product3));
 		stateRepository.saveAll(Arrays.asList(state1, state2));
@@ -127,6 +144,7 @@ public class Application {
 		addressRepository.saveAll(Arrays.asList(address1, address2));
 		orderRepository.saveAll(Arrays.asList(order1, order2));
 		paymentRepository.saveAll(Arrays.asList(payment1, payment2));
+		orderItemRepository.saveAll(Arrays.asList(orderItem1, orderItem2, orderItem3));
 
 
 	}
