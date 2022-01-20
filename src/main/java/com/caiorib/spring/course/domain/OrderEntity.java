@@ -38,7 +38,7 @@ public class OrderEntity implements Serializable {
     private PaymentEntity payment;
 
     @ManyToOne
-    @JoinColumn(name="IDT_CUSTOMER", foreignKey = @ForeignKey(name = "CUSTOMER_FK"))
+    @JoinColumn(name="IDT_CUSTOMER", foreignKey = @ForeignKey(name = "BUYING_CUSTOMER_FK"))
     private CustomerEntity customer;
 
     @ManyToOne

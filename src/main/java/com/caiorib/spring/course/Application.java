@@ -71,6 +71,11 @@ public class Application {
 	void startupDB() {
 		CategoryEntity category1 = new CategoryEntity(null, "Informática");
 		CategoryEntity category2 = new CategoryEntity(null, "Escritório");
+		CategoryEntity category3 = new CategoryEntity(null, "Cama mesa e banho");
+		CategoryEntity category4 = new CategoryEntity(null, "Eletrônicos");
+		CategoryEntity category5 = new CategoryEntity(null, "Jardinagem");
+		CategoryEntity category6 = new CategoryEntity(null, "Decoração");
+		CategoryEntity category7 = new CategoryEntity(null, "Perfumaria");
 
 		ProductEntity product1 = new ProductEntity(null, "Computador", "2000");
 		ProductEntity product2 = new ProductEntity(null, "Impressora", "800");
@@ -136,7 +141,7 @@ public class Application {
 		product2.getItems().add(orderItem3);
 		product3.getItems().add(orderItem2);
 
-		categoryRepository.saveAll(Arrays.asList(category1, category2));
+		categoryRepository.saveAll(Arrays.asList(category1, category2, category3, category4, category5, category6, category7));
 		productRepository.saveAll(Arrays.asList(product1, product2, product3));
 		stateRepository.saveAll(Arrays.asList(state1, state2));
 		cityRepository.saveAll(Arrays.asList(city1, city2, city3));

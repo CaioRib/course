@@ -7,8 +7,10 @@ import com.caiorib.spring.course.services.exceptions.DataIntegrityException;
 import com.caiorib.spring.course.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.DeleteMapping;
 
 import java.util.List;
 
@@ -36,10 +38,10 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryEntity updateCategory(CategoryEntity categoryEntity) {
-        findOne(categoryEntity.getId());
-
-        return categoryRepository.save(categoryEntity);
+    public CategoryEntity updateCategory(CategoryEntity updatedCategory) {
+        final CategoryEntity category = findOne(updatedCategory.getId());
+        category.setName(updatedCategory.getName());
+        return categoryRepository.save(category);
     }
 
     @Override
@@ -51,6 +53,13 @@ public class CategoryServiceImpl implements CategoryService {
             throw new DataIntegrityException("Cannot delete a category which has products.", e);
 
         }
+    }
+
+    @Override
+    public Page<CategoryEntity> findPaged(Integer page, Integer size, String orderBy, String direction) {
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.Direction.valueOf(direction), orderBy);
+        return categoryRepository.findAll(pageRequest);
+
     }
 
 

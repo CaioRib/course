@@ -40,7 +40,7 @@ public abstract class PaymentEntity implements Serializable {
 
     public PaymentEntity(Long id, PaymentStatusEnum paymentStatus, OrderEntity order) {
         this.id = id;
-        this.paymentStatus = paymentStatus.getId();
+        this.paymentStatus = Objects.isNull(paymentStatus) ? null : paymentStatus.getId();
         this.order = order;
     }
 

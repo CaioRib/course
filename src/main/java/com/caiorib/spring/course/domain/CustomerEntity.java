@@ -64,7 +64,7 @@ public class CustomerEntity implements Serializable {
         this.name = name;
         this.email = email;
         this.legalId = legalId;
-        this.type = type.getId();
+        this.type = (Objects.isNull(type)) ? null : type.getId();
         this.addresses = new ArrayList<>();
         this.phones = new HashSet<>();
         this.orders = new ArrayList<>();
