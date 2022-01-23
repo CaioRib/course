@@ -1,12 +1,14 @@
 package com.caiorib.spring.course.dto.request;
 
 import com.caiorib.spring.course.domain.CustomerEntity;
+import com.caiorib.spring.course.services.validation.UpdateCustomer;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 
+@UpdateCustomer
 public class CustomerRequestBody implements Serializable {
     private static final long serialVersionUID = 1L;
 

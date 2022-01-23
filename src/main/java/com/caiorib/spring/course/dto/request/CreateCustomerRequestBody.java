@@ -1,11 +1,14 @@
 package com.caiorib.spring.course.dto.request;
 
+import com.caiorib.spring.course.services.validation.InsertCustomer;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
+@InsertCustomer
 public class CreateCustomerRequestBody implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -16,19 +19,33 @@ public class CreateCustomerRequestBody implements Serializable {
     @NotEmpty(message = "E-mail é obrigatório.")
     @Email(message = "E-mail inválido.")
     private String email;
+
+    @NotEmpty(message = "CPF/CNPJ é obrigatório.")
     private String legalId;
+
+    @NotNull(message = "Tipo é obrigatório.")
     private Long type;
 
+    @NotEmpty(message = "Logradouro é obrigatório.")
     private String place;
+
+    @NotNull(message = "N[umero é obrigatório.")
     private Long number;
+
     private String additionalInfo;
+
+    @NotEmpty(message = "Bairro é obrigatório.")
     private String district;
+
+    @NotEmpty(message = "CEP é obrigatório.")
     private String postalCode;
 
+    @NotEmpty(message = "Pelo menos um telefone é obrigatório.")
     private String phone1;
     private String phone2;
     private String phone3;
 
+    @NotNull(message = "Cidade é obrigatória.")
     private Long cityId;
 
     public CreateCustomerRequestBody() {

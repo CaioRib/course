@@ -3,16 +3,7 @@ package com.caiorib.spring.course.domain;
 import com.caiorib.spring.course.domain.enums.CustomerTypeEnum;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.CollectionTable;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -33,7 +24,7 @@ public class CustomerEntity implements Serializable {
     @Column(name = "NAM_CUSTOMER")
     private String name;
 
-    @Column(name = "NAM_EMAIL")
+    @Column(name = "NAM_EMAIL", unique = true)
     private String email;
 
     @Column(name = "COD_LEGAL_ID")
@@ -42,7 +33,7 @@ public class CustomerEntity implements Serializable {
     @Column(name = "COD_TYPE")
     private Long type;
 
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private List<AddressEntity> addresses;
 
     @ElementCollection

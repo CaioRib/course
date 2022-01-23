@@ -65,7 +65,7 @@ public class CustomerServiceImpl implements CustomerService {
         try {
             customerRepository.deleteById(id);
         } catch (DataIntegrityViolationException e) {
-            throw new DataIntegrityException("Cannot delete a customer which has products.", e);
+            throw new DataIntegrityException("Cannot delete a customer which has orders.", e);
 
         }
     }
